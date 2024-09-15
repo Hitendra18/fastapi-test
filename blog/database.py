@@ -1,9 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os
 
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:Hi%4012345@localhost/fastapi"
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
+if SQLALCHEMY_DATABASE_URL is None:
+    raise ValueError("No DATABASE_URL set for the application.")
 # The Engine is a factory that can create new database connections for us,
 # which also holds onto connections inside of a Connection Pool for fast reuse.
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
